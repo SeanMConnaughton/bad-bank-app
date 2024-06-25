@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import  ReactDOM  from 'react-dom';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './navbar';
 import Home from './home';
@@ -9,14 +9,14 @@ import Deposit from './deposit';
 import Withdraw from './withdraw';
 import Balance from './balance';
 import AllData from './alldata';
-import { UserContext } from './context';
+import UserContext from './context';
 
 function Spa() {
   return (
     <HashRouter>
       <NavBar />
       <UserContext.Provider value={{ users: [{ name: 'abel', email: 'abel@mit.edu', password: 'secret', balance: 100 }] }}>
-        <routes>
+        <Routes>
           <div className="container" style={{ padding: "20px" }}>
             <Route path="/" exact component={Home} />
             <Route path="/createaccount/" component={CreateAccount} />
@@ -26,17 +26,17 @@ function Spa() {
             <Route path="/balance/" component={Balance} />
             <Route path="/alldata/" component={AllData} />
           </div>
-        </routes>
+        </Routes>
       </UserContext.Provider>
     </HashRouter>
   );
 }
 
 const container = document.getElementById('root');
-const root = createRoot(container);
-root.render(
+ReactDOM.render(
   <React.StrictMode>
     <Spa />
-  </React.StrictMode>
+  </React.StrictMode>,
+  container
 );
 
