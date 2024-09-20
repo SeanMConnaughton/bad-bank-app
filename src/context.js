@@ -1,20 +1,44 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 
-const context = createContext();
 
-export const UserContext = () => useContext(context)
+export const UserProvider = ({ children }) => {
+	const [users, setUsers] = useState([
+		{
+			name: 'abel',
+			email: 'abel@mit.edu',
+			password: 'secret',
+			balance: 100,
+		},
+	]);
 
-export const UserContextProvider = ( {children } ) => {
+	const [user, setUser] = useState(null);
 
-    // const addDataToProfile=()=>{
-    // somelogic
-    // }
+	const login = (userData) => {
+		setUser(userData);
+	};
 
-    return(
-        <UserContext.Provider value={{ users: [{ name: 'abel', email: 'abel@mit.edu', password: 'secret', balance: 100 }] }}>
-            {children}
-        </UserContext.Provider>
-    )
-}
+	const logout = () => {
+		setUser(null);
+	};
 
+	const addAccount = (newAccount) => {
+		setUsers([...users, { ...newAccount, balance: 100 }]);
+	};
+
+	return (
+		<UserContext.Provider
+			value={{
+				user,
+				users,
+				addAccount,
+				login,
+				logout,
+			}}
+		>
+			{children}
+		</UserContext.Provider>
+	);
+};
+
+export const UserContext = createContext();
 export default UserContext;

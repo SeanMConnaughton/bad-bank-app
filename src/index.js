@@ -1,5 +1,5 @@
 import React from 'react';
-import  ReactDOM  from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './navbar';
 import Home from './home';
@@ -9,34 +9,35 @@ import Deposit from './deposit';
 import Withdraw from './withdraw';
 import Balance from './balance';
 import AllData from './alldata';
-import UserContext from './context';
+import { UserProvider } from './context';
+
 
 function Spa() {
   return (
     <HashRouter>
       <NavBar />
-      <UserContext.Provider value={{ users: [{ name: 'abel', email: 'abel@mit.edu', password: 'secret', balance: 100 }] }}>
-        <Routes>
-          <div className="container" style={{ padding: "20px" }}>
-            <Route path="/" exact component={Home} />
-            <Route path="/createaccount/" component={CreateAccount} />
-            <Route path="/login/" component={Login} />
-            <Route path="/deposit/" component={Deposit} />
-            <Route path="/withdraw/" component={Withdraw} />
-            <Route path="/balance/" component={Balance} />
-            <Route path="/alldata/" component={AllData} />
-          </div>
-        </Routes>
-      </UserContext.Provider>
+      <UserProvider>
+        <div className="container" style={{ padding: "20px" }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/createaccount/" element={<CreateAccount />} />
+            <Route path="/login/" element={<Login />} />
+            <Route path="/deposit/" element={<Deposit />} />
+            <Route path="/withdraw/" element={<Withdraw />} />
+            <Route path="/balance/" element={<Balance />} />
+            <Route path="/alldata/" element={<AllData />} />
+          </Routes>
+        </div>
+      </UserProvider>
     </HashRouter>
   );
 }
 
 const container = document.getElementById('root');
-ReactDOM.render(
+const root = ReactDOM.createRoot(container);
+root.render(
   <React.StrictMode>
     <Spa />
-  </React.StrictMode>,
-  container
+  </React.StrictMode>
 );
 
