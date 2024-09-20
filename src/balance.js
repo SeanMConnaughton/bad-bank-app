@@ -2,13 +2,21 @@ import React, { useContext } from 'react';
 import { UserContext } from './context';
 
 function Balance() {
-	const ctx = useContext(UserContext);// Todo: Call the `useContext` hook with the `UserContext` object, and store it in a variable. Refer to alldata.js for example.
+	const { user } = useContext(UserContext);
+
 	return (
-		<h1>
-			Balance
-			<br/>
-			{JSON.stringify(ctx)}
-		</h1>
+		<div className="container">
+			{user ? (
+				<div>
+					<h2>Balance</h2>
+					<p className="lead">Your current balance is: ${user.balance}</p>
+				</div>
+			) : (
+				<div className="alert alert-warning" role="alert">
+					You must be logged in to view the balance.
+				</div>
+			)}
+		</div>
 	);
 }
 

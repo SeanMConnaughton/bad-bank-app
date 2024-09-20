@@ -24,12 +24,19 @@ export const UserProvider = ({ children }) => {
 	const addAccount = (newAccount) => {
 		setUsers([...users, { ...newAccount, balance: 100 }]);
 	};
+	
+	const updateUserBalance = (newBalance) => {
+		if (user) {
+			setUser((prevUser) => ({...prevUser, balance: newBalance }));
+		}
+	};
 
 	return (
 		<UserContext.Provider
 			value={{
 				user,
 				users,
+				updateUserBalance,
 				addAccount,
 				login,
 				logout,
